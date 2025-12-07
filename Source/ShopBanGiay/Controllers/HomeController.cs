@@ -34,6 +34,12 @@ namespace ShopBanGiay.Controllers
             ViewBag.maloai = maloai;
             return View(lst);
         }
+
+        public IActionResult Chitietsanpham(string maSP)
+        {
+            var sanPham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSP);
+            return View(sanPham);
+        }
         public IActionResult Privacy()
         {
             return View();
