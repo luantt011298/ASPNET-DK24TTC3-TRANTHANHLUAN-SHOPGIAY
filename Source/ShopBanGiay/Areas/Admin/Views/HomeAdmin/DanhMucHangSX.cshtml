@@ -1,0 +1,59 @@
+﻿@using ShopBanGiay.Models
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<THangSx>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "DanhMucHangSX";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Danh mục các hãng sãn xuát</h2>
+
+<p>
+    <a asp-action="ThemHangSX">Thêm hãng mới</a>
+</p>
+<p>@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Tên hãng
+            </th>
+            <th>
+                Mã quốc gia
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            int mau = 0;
+            string cls = "table-succes";
+        }
+        @foreach (var item in Model)
+        {
+            mau = mau + 1;
+            cls = "table-succes";
+            if (mau % 2 == 0)
+            {
+                cls = "table-primary";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.HangSx)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNuocThuongHieu)
+                </td>
+                <td>
+                    <a asp-action="SuaHangSX" asp-route-maHangSX="@item.MaHangSx">Sửa</a> |
+                    <a asp-action="XoaHangSX" asp-route-maHangSX="@item.MaHangSx">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="product__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("DanhMucHangSX", new { page = page }))
+</div>
