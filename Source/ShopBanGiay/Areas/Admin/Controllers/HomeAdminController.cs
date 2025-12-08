@@ -52,5 +52,49 @@ namespace ShopBanGiay.Areas.Admin.Controllers
             }    
             return View(sanPham);
         }
+
+        [Route("suasanpham")]
+        [HttpGet]
+
+        public IActionResult SuaSanPham(string maSanPham)
+        {
+            ViewBag.MaChatLieu = new SelectList(db.TChatLieus.ToList(), "MaChatLieu", "ChatLieu");
+            ViewBag.MaHangSx = new SelectList(db.THangSxes.ToList(), "MaHangSx", "HangSx");
+            ViewBag.MaNuocSx = new SelectList(db.TQuocGia.ToList(), "MaNuoc", "TenNuoc");
+            ViewBag.MaLoai = new SelectList(db.TLoaiSps.ToList(), "MaLoai", "Loai");
+            ViewBag.MaSd = new SelectList(db.TLoaiSds.ToList(), "MaSd", "TenLoai");
+            var sanPham = db.TDanhMucSps.Find(maSanPham);
+            return View(sanPham);
+        }
+        [Route("suasanpham")]
+        [HttpPost]
+        public IActionResult SuaSanPham(TDanhMucSp sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(sanPham).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("DanhMucSP", "HomeAdmin");
+            }
+            return View(sanPham);
+        }
+
+        [Route("xoasanpham")]
+        [HttpGet]
+        public IActionResult XoaSanPham(string maSP)
+        {
+            TempData["Message"] = "";
+            var chiTietSP = db.TChiTietSanPhams.Where(x => x.MaSp == maSP).ToList();
+            if(chiTietSP.Count() > 0)
+            {
+                TempData["Message"] = "Không được xóa sản phẩm này";
+                return RedirectToAction("DanhMucSP", "HomeAdmin");
+
+            }
+            db.Remove(db.TDanhMucSps.Find(maSP));
+            db.SaveChanges();
+            TempData["Message"] = "Sản phẩm đã được xóa";
+            return RedirectToAction("DanhMucSP", "HomeAdmin");
+        }
     }
 }

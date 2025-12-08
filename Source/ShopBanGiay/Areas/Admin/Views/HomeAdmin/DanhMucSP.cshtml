@@ -12,6 +12,7 @@
 <p>
     <a asp-action="ThemSanPham">Thêm sản phẩm mới</a>
 </p>
+<p>@TempData["Message"]</p>
 <table class="table">
     <thead>
         <tr class="table-warning">
@@ -75,9 +76,8 @@
                 @Html.DisplayFor(modelItem => item.GiaLonNhat)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaSp">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaSp">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaSp">Delete</a>
+                <a asp-action="SuaSanPham" asp-route-maSanPham="@item.MaSp">Sửa</a> |
+                <a asp-action="XoaSanPham" asp-route-maSP="@item.MaSp">Xóa</a>
             </td>
         </tr>
 }
