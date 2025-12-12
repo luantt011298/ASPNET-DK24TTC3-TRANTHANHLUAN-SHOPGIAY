@@ -165,6 +165,6 @@ namespace ShopBanGiay.Areas.Admin.Controllers
             db.SaveChanges();
             TempData["Message"] = "Hãng đã được xóa";
             return RedirectToAction("DanhMucHangSX", "HomeAdmin");
-        }
+        }        
     }
 }
